@@ -6,7 +6,7 @@ import map.GameMap;
 
 import java.util.List;
 
-public class Herbivore extends Creature {
+public class Herbivore extends Creature implements Mammalian {
     public Herbivore(int speed, int hitPoints) {
         super(speed, hitPoints);
     }
@@ -37,5 +37,10 @@ public class Herbivore extends Creature {
     @Override
     public String getSprite() {
         return "\uD83D\uDC11";
+    }
+
+    @Override
+    public boolean isEdible(Entity target) {
+        return target instanceof Vegetable;
     }
 }

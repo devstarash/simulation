@@ -2,7 +2,7 @@ package entities;
 
 import java.util.Objects;
 
-public class Grass extends Entity {
+public class Grass extends Entity implements Vegetable {
     private final int nutritionValue;
 
     public Grass() {

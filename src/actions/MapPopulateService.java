@@ -6,20 +6,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MapPopulateService implements Actionable {
-    private final List<Populatable> populateService = new ArrayList<>();
+    private final List<Populatable> populateEntityService = new ArrayList<>();
 
     public MapPopulateService() {
-        this.populateService.add(new HerbivorePopulator());
-        this.populateService.add(new PredatorPopulator());
-        this.populateService.add(new GrassPopulator());
-        this.populateService.add(new RockPopulator());
-        this.populateService.add(new TreePopulator());
+        this.populateEntityService.add(new HerbivorePopulateService());
+        this.populateEntityService.add(new PredatorPopulateService());
+        this.populateEntityService.add(new GrassPopulateService());
+        this.populateEntityService.add(new RockPopulateService());
+        this.populateEntityService.add(new TreePopulateService());
     }
 
     @Override
     public void execute(GameMap map) {
-        for (Populatable service : populateService) {
-            service.execute(map);
+        for (Populatable entityPopulatorType : populateEntityService) {
+            entityPopulatorType.execute(map);
         }
 
     }

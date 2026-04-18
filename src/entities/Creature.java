@@ -22,4 +22,6 @@ public abstract class Creature extends Entity {
         map.removeEntity(coordinates);
     }
 
+    public abstract boolean isEdible(Entity target);
+
 }

@@ -6,7 +6,7 @@ import map.GameMap;
 
 import java.util.List;
 
-public class Predator extends Creature {
+public class Predator extends Creature implements Predatory {
     private final int hitPower;
 
     public Predator(int speed, int hitPoints, int hitPower) {
@@ -15,9 +15,7 @@ public class Predator extends Creature {
     }
 
     @Override
-    public void makeMove(GameMap map) {
-        Coordinates currentPosition = map.getCoordinatesOfEntity(this);
-        List<Coordinates> pathToFood = foodFinder.findPath(currentPosition, Herbivore.class, map);
+    public void makeMove(GameMap map, List<Coordinates> pathToFood) {
         if (pathToFood.isEmpty()) {
             hitPoints -= GameConfig.IDLE_HUNGER_DAMAGE;
         } else if (this.speed >= pathToFood.size()) {
@@ -46,5 +44,10 @@ public class Predator extends Creature {
     @Override
     public String getSprite() {
         return "\uD83D\uDC3A";
+    }
+
+    @Override
+    public boolean isEdible(Entity target) {
+        return target instanceof Mammalian;
     }
 }

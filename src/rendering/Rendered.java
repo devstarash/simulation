@@ -6,15 +6,16 @@ import map.Coordinates;
 import map.GameMap;
 
 public class Rendered {
-    public static void withdrawCard(GameMap map) {
+    public void withdrawCard(GameMap map, int numberOfMove) {
+        System.out.printf("Номер хода: %s \n", numberOfMove);
         for (int x = 0; x < map.getWidth(); x++) {
             for (int y = 0; y < map.getHeight(); y++) {
-                Entity entity = map.getEntity(new Coordinates(x, y));
-                if (entity == null){
-                    System.out.print("\uD83D\uDFEB");
+                Coordinates currentCoordinates = new Coordinates(x, y);
+                Entity entity = map.getEntity(currentCoordinates);
+                if (entity == null) {
+                    System.out.print(GameConfig.GAME_LANDSCAPE_SPRITE);
 
-                }
-                else {
+                } else {
                     String entitySprite = entity.getSprite();
                     System.out.print(entitySprite);
                 }
@@ -25,16 +26,15 @@ public class Rendered {
         System.out.println("Количество хищников на карте: " + map.getPredatorsAlive());
         System.out.println("Количество травы на карте: " + map.getCurrentGrassAmount());
     }
-    public static void printWelcomeMessage() {
+
+    public void printWelcomeMessage() {
         System.out.println("🌿 Добро пожаловать в Симуляцию Экосистемы! 🌿");
         System.out.println("Вы наблюдатель за миром.");
         System.out.println("Следите за балансом травоядных и хищников.");
-        System.out.println("\nВведите 'stop' в любой момент, чтобы остановить время.\n");
-        try {
-            Thread.sleep(GameConfig.START_PAUSE);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        System.out.printf("\nВведите '%s' в любой момент, чтобы остановить время.\n", GameConfig.STOP_GAME_LINE);
+    }
 
+    public void printFinalMessage() {
+        System.out.println("Игра окончена! Все хищники умерли от голода.");
     }
 }

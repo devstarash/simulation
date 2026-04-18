@@ -11,11 +11,14 @@ public abstract class GameConfig {
     public static final double PREDATOR_PERCENTAGE = 0.050;
     public static final double HERBIVORE_PERCENTAGE = 0.150;
     public static final double GRASS_PERCENTAGE = 0.25;
-    public static final double GROUND_PERCENTAGE = 0.25;
     public static final double TREE_PERCENTAGE = 0.20;
     public static final double ROCK_PERCENTAGE = 0.10;
     public static final int DEFAULT_MAP_SIZES = 10;
     public static final int GRASS_GROWTH_INTERVAL = 5;
     public static final int DELAY_BETWEEN_MOVE = 5000;
     public static final int START_PAUSE = 5000;
+    public static final String STOP_GAME_LINE = "stop";
+    public static final String GAME_RESUME_LINE = "continue";
+    public static final String GAME_LANDSCAPE_SPRITE = "\uD83D\uDFEB";
 }
+

@@ -1,5 +1,6 @@
 package pathfinding;
 
+import entities.Creature;
 import entities.Entity;
 import map.Coordinates;
 import map.GameMap;
@@ -7,9 +8,15 @@ import map.GameMap;
 import java.util.*;
 
 public class PathFinder {
-    public List<Coordinates> findPath(Coordinates start, Class<? extends Entity> targetClass, GameMap map) {
+    private final GameMap map;
+
+    public PathFinder(GameMap map) {
+        this.map = map;
+    }
+
+    public List<Coordinates> findPath(Coordinates start) {
         Map<Coordinates, Coordinates> reversedPath = new HashMap<>();
-        Coordinates target = searchPath(start, targetClass, map, reversedPath);
+        Coordinates target = searchPath(start, reversedPath);
         if (target.equals(new Coordinates(-1, -1))) {
             return Collections.emptyList();
         }
@@ -28,19 +35,21 @@ public class PathFinder {
         return correctPath;
     }
 
-    private Coordinates searchPath(Coordinates start, Class<? extends Entity> targetClass, GameMap map, Map<Coordinates, Coordinates> path) {
+    private Coordinates searchPath(Coordinates start, Map<Coordinates, Coordinates> path) {
+        Creature startingCreature = (Creature) map.getEntity(start);
         Queue<Coordinates> queue = new LinkedList<>();
         queue.add(start);
         path.put(start, null);
         while (!queue.isEmpty()) {
             Coordinates targetCoordinates = queue.poll();
             Entity target = map.getEntity(targetCoordinates);
-            if (targetClass.isInstance(target)) {
+            if (startingCreature.isEdible(target)) {
                 return targetCoordinates;
             }
-            for (Coordinates neighbor : getNeighbors(targetCoordinates, map)) {
+            for (Coordinates neighbor : getNeighbors(targetCoordinates)) {
                 if (!path.containsKey(neighbor)) {
-                    if (map.getEntity(neighbor) == null || targetClass.isInstance(map.getEntity(neighbor))) {
+                    Entity currentNeighbor = map.getEntity(neighbor);
+                    if (currentNeighbor == null || startingCreature.isEdible(currentNeighbor)) { //
                         queue.add(neighbor);
                         path.put(neighbor, targetCoordinates);
                     }
@@ -50,12 +59,9 @@ public class PathFinder {
         return new Coordinates(-1, -1);
     }
 
-    private List<Coordinates> getNeighbors(Coordinates coordinates, GameMap map) {
+    private List<Coordinates> getNeighbors(Coordinates coordinates) {
         List<Coordinates> neighbors = new ArrayList<>();
-        List<Coordinates> offsetOptions = List.of(
-                new Coordinates(1, 0), new Coordinates(-1, 0),
-                new Coordinates(0, -1), new Coordinates(0, 1)
-        );
+        List<Coordinates> offsetOptions = List.of(new Coordinates(1, 0), new Coordinates(-1, 0), new Coordinates(0, -1), new Coordinates(0, 1));
         for (Coordinates offset : offsetOptions) {
             Coordinates newCoordinates = new Coordinates(coordinates.x() + offset.x(), coordinates.y() + offset.y());
             boolean isValidCoordinates = map.isInBounds(newCoordinates);
