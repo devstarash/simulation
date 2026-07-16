@@ -1,4 +1,3 @@
-### --- macOS (Системные файлы) ---
 .DS_Store
 .AppleDouble
 .LSOverride
@@ -7,16 +6,12 @@ Icon?
 .Spotlight-V100
 .Trashes
 
-### --- IntelliJ IDEA ---
 .idea/
 *.iml
 *.iws
 *.ipr
 out/
-# Если работаешь в команде, иногда оставляют .idea/runConfigurations,
-# но для учебных и личных проектов лучше игнорировать всю папку .idea/
 
-### --- Java & Скомпилированные файлы ---
 *.class
 *.log
 *.ctxt
@@ -28,20 +23,15 @@ out/
 *.tar.gz
 *.rar
 
-### --- Gradle ---
 .gradle/
 build/
 /bin/
 
-# Важно: файлы Gradle Wrapper лучше оставить в репозитории,
-# чтобы проект можно было собрать без предустановленного Gradle.
-# Поэтому мы их "разгинориваем":
 !gradle/wrapper/gradle-wrapper.jar
 !gradle/wrapper/gradle-wrapper.properties
 !gradlew
 !gradlew.bat
 
-### --- Прочее ---
 .DS_Store
 Captures/
 .externalNativeBuild/
